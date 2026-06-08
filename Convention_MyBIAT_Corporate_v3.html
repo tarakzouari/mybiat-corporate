@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convention MyBIAT Corporate</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;background:#f4f6f9;color:#1a1a2e;padding:2rem 1rem}
+  .container{max-width:760px;margin:0 auto}
+  .header{text-align:center;margin-bottom:2rem}
+  .header h1{font-size:22px;font-weight:700;color:#1E5FA5}
+  .header p{font-size:14px;color:#666;margin-top:6px}
+  .card{background:#fff;border-radius:12px;border:1px solid #e0e6ed;padding:1.5rem;margin-bottom:1.25rem}
+  .card-title{font-size:15px;font-weight:700;color:#1E5FA5;margin-bottom:1rem;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e8edf2;padding-bottom:10px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .field-row.single{grid-template-columns:1fr}
+  .field{display:flex;flex-direction:column;gap:5px}
+  label.field-label{font-size:12px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:0.4px}
+  input[type=text],input[type=email],select{height:38px;padding:0 12px;border:1px solid #d0d8e4;border-radius:8px;font-size:14px;color:#1a1a2e;background:#fff;width:100%;transition:border 0.2s}
+  input:focus,select:focus{outline:none;border-color:#1E5FA5;box-shadow:0 0 0 3px rgba(30,95,165,0.1)}
+  .type-row{display:flex;gap:10px;margin-bottom:1rem}
+  .type-btn{flex:1;padding:10px;border:1.5px solid #d0d8e4;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:#888;text-align:center;transition:all 0.2s}
+  .type-btn.active{background:#EBF3FB;color:#1E5FA5;border-color:#1E5FA5}
+  .modules-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .module-card{border:1px solid #e0e6ed;border-radius:8px;padding:12px}
+  .module-card.full{grid-column:span 2}
+  .module-card label.main{font-size:13px;font-weight:700;color:#1a1a2e;cursor:pointer;display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0}
+  .module-card .sub{font-size:12px;color:#888;margin-top:6px;margin-left:24px}
+  .radio-row{display:flex;gap:16px;margin-top:10px;margin-left:24px}
+  .radio-row label{font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-weight:500;color:#333}
+  .user-tab-row{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+  .user-tab{padding:7px 16px;border-radius:20px;border:1px solid #d0d8e4;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:#888;transition:all 0.2s}
+  .user-tab.active{background:#1E5FA5;color:#fff;border-color:#1E5FA5}
+  .user-panel{display:none}
+  .user-panel.active{display:block}
+  .hab-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
+  .hab-table th{background:#1E5FA5;color:#fff;padding:8px 6px;text-align:center;font-weight:600;border:1px solid #1a5090;font-size:11px}
+  .hab-table th.left{text-align:left;padding-left:10px}
+  .hab-table td{padding:7px 6px;border:1px solid #e0e6ed;text-align:center;font-size:12px}
+  .hab-table td.feat{text-align:left;color:#444;padding-left:10px}
+  .hab-table td.cat{font-weight:700;background:#EBF3FB;color:#1E5FA5;text-align:left;padding-left:10px;font-size:12px}
+  .hab-table input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#1E5FA5}
+  .nb-users-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+  .nb-users-row label{font-size:13px;font-weight:600;color:#555}
+  .nb-users-row select{width:80px}
+  .btn-generate{width:100%;height:48px;background:#1E5FA5;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:0.5rem;transition:background 0.2s}
+  .btn-generate:hover{background:#0C447C}
+  .btn-generate:disabled{background:#aaa;cursor:not-allowed}
+  .biat-logo-box{display:inline-block;background:#1E5FA5;color:#fff;font-size:20px;font-weight:900;padding:8px 18px;border-radius:6px;letter-spacing:1px;margin-bottom:1rem}
+  .biat-slash{color:#E8333A}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div><span class="biat-logo-box"><span class="biat-slash">/</span> BIAT</span></div>
+    <h1>Convention d'adhésion à MyBIAT Corporate</h1>
+    <p>Remplissez ce formulaire — le contrat PDF se génère automatiquement.</p>
+  </div>
+
+  <!-- AGENCE -->
+  <div class="card">
+    <div class="card-title">&#127970; Informations agence BIAT</div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Nom du directeur d'agence</label><input type="text" id="dir_nom"></div>
+      <div class="field"><label class="field-label">Nom de l'agence</label><input type="text" id="agence_nom"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Code agence</label><input type="text" id="agence_code"></div>
+      <div class="field"><label class="field-label">Ville de signature</label><input type="text" id="ville"></div>
+    </div>
+  </div>
+
+  <!-- CLIENT -->
+  <div class="card">
+    <div class="card-title">&#127970; Informations entreprise (client)</div>
+    <div class="field-row single">
+      <div class="field"><label class="field-label">Dénomination sociale et forme juridique</label><input type="text" id="soc_nom"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Identifiant Unique (matricule fiscal)</label><input type="text" id="soc_id"></div>
+      <div class="field"><label class="field-label">N° compte de facturation</label><input type="text" id="soc_compte"></div>
+    </div>
+    <div class="field-row single">
+      <div class="field"><label class="field-label">Adresse du siège social</label><input type="text" id="soc_adresse"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Représentant légal (nom complet)</label><input type="text" id="soc_rep"></div>
+      <div class="field"><label class="field-label">Qualité / Fonction</label><input type="text" id="soc_qualite"></div>
+    </div>
+  </div>
+
+  <!-- OFFRE -->
+  <div class="card">
+    <div class="card-title">&#9881; Offre souscrite — Annexe 1</div>
+    <div class="type-row">
+      <div class="type-btn active" id="btn_creation" onclick="setType('creation')">&#10010; Création</div>
+      <div class="type-btn" id="btn_modif" onclick="setType('modification')">&#9998; Modification</div>
+    </div>
+    <div class="modules-grid">
+      <div class="module-card">
+        <label class="main"><input type="checkbox" id="mod_cash" onchange="toggleSub('sub_cash',this.checked)"> Cash Management</label>
+        <div class="sub">Virements, consultation comptes &amp; cartes</div>
+        <div class="radio-row" id="sub_cash" style="display:none">
+          <label><input type="radio" name="cash_tier" value="classique" checked> Classique</label>
+          <label><input type="radio" name="cash_tier" value="premium"> Premium</label>
+        </div>
+      </div>
+      <div class="module-card">
+        <label class="main"><input type="checkbox" id="mod_masse"> Opérations de masse</label>
+        <div class="sub">Virements multiples, salaires, prélèvements</div>
+      </div>
+      <div class="module-card full">
+        <label class="main"><input type="checkbox" id="mod_admin" onchange="toggleSub('sub_admin',this.checked)"> Administration société</label>
+        <div class="sub">Gestion des droits et rôles utilisateurs</div>
+        <div class="radio-row" id="sub_admin" style="display:none">
+          <label><input type="radio" name="admin_tier" value="classique" checked> Classique</label>
+          <label><input type="radio" name="admin_tier" value="premium"> Premium</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UTILISATEURS -->
+  <div class="card">
+    <div class="card-title">&#128101; Utilisateurs &amp; habilitations — Annexe 2</div>
+    <div class="nb-users-row">
+      <label>Nombre d'utilisateurs :</label>
+      <select id="nb_users" onchange="buildUserTabs()">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="user-tab-row" id="user_tabs"></div>
+    <div id="user_panels"></div>
+  </div>
+
+  <button class="btn-generate" id="btn_gen" onclick="generatePDF()">&#11123; Générer et télécharger le contrat PDF</button>
+</div>
+
+<script>
+// ─── DONNÉES ───────────────────────────────────────────────────────────────
+const feats = [
+  {cat:"1 - Cash Management", items:[
+    "Consultation compte (extrait et liste des comptes)",
+    "Consultation carte (extrait et liste des cartes)",
+    "Liste des placements",
+    "Virement unitaire",
+    "Chargement carte",
+    "Téléchargement",
+    "Chéquier",
+    "Consultation AVA",
+    "Gestion des valeurs (effets & chèques)"
+  ]},
+  {cat:"2 - Opérations de masse", items:[
+    "Virements multiples fournisseurs",
+    "Virements multiples Salaires",
+    "Chargement carte multiple",
+    "Virement Multiple International",
+    "Prélèvement Multiple"
+  ]},
+  {cat:"3 - Administration société (Classique/Premium)*", items:[
+    "Administration société"
+  ]}
+];
+const roles  = ["Consultation","Initiateur","Valideur","Administrateur"];
+const groupes = ["Comptes TND","Comptes devises"];
+let convType = "creation";
+
+// ─── UI ────────────────────────────────────────────────────────────────────
+function setType(t){
+  convType=t;
+  document.getElementById("btn_creation").className="type-btn"+(t==="creation"?" active":"");
+  document.getElementById("btn_modif").className  ="type-btn"+(t==="modification"?" active":"");
+}
+function toggleSub(id,show){ document.getElementById(id).style.display=show?"flex":"none"; }
+function getVal(id){ const e=document.getElementById(id); return e?e.value.trim():""; }
+function getChk(id){ const e=document.getElementById(id); return e&&e.checked; }
+function getRadio(name){ const e=document.querySelector('input[name="'+name+'"]:checked'); return e?e.value:""; }
+
+function buildUserTabs(){
+  const n=parseInt(document.getElementById("nb_users").value);
+  const tabs=document.getElementById("user_tabs");
+  const panels=document.getElementById("user_panels");
+  tabs.innerHTML=""; panels.innerHTML="";
+  for(let i=1;i<=n;i++){
+    const tab=document.createElement("div");
+    tab.className="user-tab"+(i===1?" active":"");
+    tab.textContent="Utilisateur "+i;
+    (function(idx){
+      tab.onclick=function(){
+        document.querySelectorAll(".user-tab").forEach(t=>t.classList.remove("active"));
+        document.querySelectorAll(".user-panel").forEach(p=>p.classList.remove("active"));
+        this.classList.add("active");
+        document.getElementById("panel_user_"+idx).classList.add("active");
+      };
+    })(i);
+    tabs.appendChild(tab);
+
+    const panel=document.createElement("div");
+    panel.className="user-panel"+(i===1?" active":"");
+    panel.id="panel_user_"+i;
+    panel.innerHTML=
+      '<div class="field-row">'+
+        '<div class="field"><label class="field-label">Nom</label><input type="text" id="u'+i+'_nom"></div>'+
+        '<div class="field"><label class="field-label">Prénom</label><input type="text" id="u'+i+'_prenom"></div>'+
+      '</div>'+
+      '<div class="field-row">'+
+        '<div class="field"><label class="field-label">Email</label><input type="email" id="u'+i+'_email"></div>'+
+        '<div class="field"><label class="field-label">N° GSM</label><input type="text" id="u'+i+'_gsm"></div>'+
+      '</div>'+
+      '<p style="font-size:13px;color:#666;margin:14px 0 6px;font-weight:600;">Habilitations :</p>'+
+      buildHabTable(i);
+    panels.appendChild(panel);
+  }
+}
+
+function buildHabTable(uid){
+  let h='<table class="hab-table"><thead><tr>'+
+    '<th class="left" style="width:34%">Fonctionnalité</th>'+
+    roles.map(r=>'<th>'+r+'</th>').join("")+
+    groupes.map(g=>'<th>'+g+'</th>').join("")+
+    '</tr></thead><tbody>';
+  feats.forEach(f=>{
+    h+='<tr><td class="cat" colspan="'+(1+roles.length+groupes.length)+'">'+f.cat+'</td></tr>';
+    f.items.forEach(item=>{
+      const key=item.replace(/[^a-z0-9]/gi,"_").toLowerCase();
+      h+='<tr><td class="feat">'+item+'</td>';
+      roles.forEach(r=>{ const rid=r.replace(/[^a-z]/gi,"").toLowerCase(); h+='<td><input type="checkbox" id="u'+uid+'_'+key+'_'+rid+'"></td>'; });
+      groupes.forEach(g=>{ const gid=g.replace(/[^a-z]/gi,"").toLowerCase(); h+='<td><input type="checkbox" id="u'+uid+'_'+key+'_'+gid+'"></td>'; });
+      h+='</tr>';
+    });
+  });
+  return h+'</tbody></table>';
+}
+
+// ─── GÉNÉRATION PDF ────────────────────────────────────────────────────────
+async function generatePDF(){
+  if(typeof PDFLib==="undefined"){ alert("La librairie PDF n'est pas encore chargée. Patientez quelques secondes et réessayez."); return; }
+
+  const btn=document.getElementById("btn_gen");
+  btn.disabled=true; btn.textContent="Génération en cours...";
+
+  try{
+    const { PDFDocument, rgb, StandardFonts } = PDFLib;
+
+    // Données du formulaire
+    const n      = parseInt(document.getElementById("nb_users").value);
+    const dir    = getVal("dir_nom")    || "………………………………";
+    const agence = getVal("agence_nom") || "………………………";
+    const code   = getVal("agence_code")|| "……";
+    const ville  = getVal("ville")      || "………………";
+    const socNom = getVal("soc_nom")    || "………………………………………";
+    const socId  = getVal("soc_id")     || "………………………";
+    const socAdr = getVal("soc_adresse")|| "………………………";
+    const socRep = getVal("soc_rep")    || "………………………………";
+    const socQual= getVal("soc_qualite")|| "………………";
+    const socCpte= getVal("soc_compte") || "…………………………";
+    const today  = new Date().toLocaleDateString("fr-TN");
+    const modCash = getChk("mod_cash");
+    const cashTier= modCash ? getRadio("cash_tier") : "";
+    const modMasse= getChk("mod_masse");
+    const modAdmin= getChk("mod_admin");
+    const adminTier= modAdmin ? getRadio("admin_tier") : "";
+
+    const users=[];
+    for(let i=1;i<=n;i++){
+      const habs=[];
+      feats.forEach(f=>{
+        f.items.forEach(item=>{
+          const key=item.replace(/[^a-z0-9]/gi,"_").toLowerCase();
+          const row={feat:item, roles:{}, groupes:{}};
+          roles.forEach(r=>{ const rid=r.replace(/[^a-z]/gi,"").toLowerCase(); row.roles[r]=getChk("u"+i+"_"+key+"_"+rid); });
+          groupes.forEach(g=>{ const gid=g.replace(/[^a-z]/gi,"").toLowerCase(); row.groupes[g]=getChk("u"+i+"_"+key+"_"+gid); });
+          habs.push(row);
+        });
+      });
+      users.push({nom:getVal("u"+i+"_nom"),prenom:getVal("u"+i+"_prenom"),email:getVal("u"+i+"_email"),gsm:getVal("u"+i+"_gsm"),habs});
+    }
+
+    // ── Création du document PDF ──
+    const pdfDoc = await PDFDocument.create();
+    const fontR  = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontB  = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+    const BLUE  = rgb(0.118, 0.373, 0.647);  // #1E5FA5
+    const LBLUE = rgb(0.839, 0.914, 0.969);  // #D6E9F8
+    const RED   = rgb(0.91, 0.2, 0.23);
+    const WHITE = rgb(1,1,1);
+    const BLACK = rgb(0,0,0);
+    const GRAY  = rgb(0.45,0.45,0.45);
+    const W=595, H=842, M=45; // A4, marges
+
+    // ── Helpers ──
+    function newPage(){
+      const p=pdfDoc.addPage([W,H]);
+      // Header bande bleue
+      p.drawRectangle({x:0,y:H-36,width:W,height:36,color:BLUE});
+      p.drawText("/ BIAT",{x:18,y:H-24,size:14,font:fontB,color:WHITE});
+      p.drawText("Convention d'adhésion à MyBIAT Corporate",{x:80,y:H-24,size:10,font:fontR,color:WHITE});
+      return p;
+    }
+
+    function wrapText(text, maxWidth, font, size){
+      const words=text.split(" ");
+      const lines=[]; let cur="";
+      words.forEach(w=>{
+        const test=cur?cur+" "+w:w;
+        if(font.widthOfTextAtSize(test,size)<=maxWidth){ cur=test; }
+        else{ if(cur) lines.push(cur); cur=w; }
+      });
+      if(cur) lines.push(cur);
+      return lines;
+    }
+
+    function drawText(page,text,x,y,opts){
+      opts=opts||{};
+      page.drawText(text,{x,y,size:opts.size||10,font:opts.bold?fontB:fontR,color:opts.color||BLACK});
+    }
+
+    function drawWrapped(page,text,x,y,maxW,opts){
+      opts=opts||{};
+      const sz=opts.size||9.5;
+      const lines=wrapText(text,maxW,opts.bold?fontB:fontR,sz);
+      lines.forEach((l,i)=>{ page.drawText(l,{x,y:y-i*opts.lineH||y-i*13,size:sz,font:opts.bold?fontB:fontR,color:opts.color||BLACK}); });
+      return lines.length;
+    }
+
+    function sectionTitle(page,text,y){
+      page.drawRectangle({x:M,y:y-4,width:W-2*M,height:20,color:LBLUE});
+      page.drawText(text,{x:M+6,y:y+2,size:11,font:fontB,color:BLUE});
+      return y-28;
+    }
+
+    function hLine(page,y){ page.drawLine({start:{x:M,y},end:{x:W-M,y},thickness:0.5,color:rgb(0.8,0.8,0.8)}); }
+
+    function sigBlock(page,y,banque,client){
+      page.drawText("Signature de la Banque",{x:M,y,size:9,font:fontB,color:BLACK});
+      page.drawText("P/ "+banque,{x:M,y:y-14,size:9,font:fontR,color:BLACK});
+      page.drawRectangle({x:M,y:y-50,width:150,height:30,borderColor:GRAY,borderWidth:0.5,color:rgb(0.97,0.97,0.97)});
+
+      page.drawText("Lu et approuvé — Signature du Client",{x:W-M-200,y,size:9,font:fontB,color:BLACK});
+      page.drawText(client,{x:W-M-200,y:y-14,size:9,font:fontR,color:BLACK});
+      page.drawRectangle({x:W-M-200,y:y-50,width:150,height:30,borderColor:GRAY,borderWidth:0.5,color:rgb(0.97,0.97,0.97)});
+    }
+
+    // ══════════════════════════════════════════
+    //  PAGE 1 — Convention principale
+    // ══════════════════════════════════════════
+    let page=newPage(); let y=H-60;
+
+    // Titre
+    page.drawText("Convention d'adhésion à MyBIAT Corporate",{x:M,y,size:15,font:fontB,color:BLUE});
+    y-=30;
+
+    y=sectionTitle(page,"ENTRE LES SOUSSIGNEES",y);
+
+    // Bloc Banque
+    const banqueText="La Banque Internationale Arabe de Tunisie, « BIAT », Société Anonyme, au capital social de 178 500 000 Dinars, inscrite au RNE sous l'Identifiant Unique n° 0000110 F, dont le siège social est sis à Tunis, 70-72 Avenue Habib Bourguiba Tunis 1080, représentée par "+dir+", Directeur de l'agence "+agence+" ("+code+").";
+    const bLines=wrapText(banqueText,W-2*M-10,fontR,9.5);
+    bLines.forEach((l,i)=>page.drawText(l,{x:M+6,y:y-i*13,size:9.5,font:fontR,color:BLACK}));
+    y-=bLines.length*13+6;
+    page.drawText("Ci-après dénommée la « Banque »,",{x:M+6,y,size:9.5,font:fontB,color:BLACK}); y-=20;
+    page.drawText("D'une part,",{x:M+6,y,size:9.5,font:fontR,color:BLACK}); y-=20;
+    page.drawText("ET",{x:M+6,y,size:9.5,font:fontB,color:BLACK}); y-=16;
+
+    const clientText="La Société "+socNom+", inscrite au RNE sous l'Identifiant Unique n° "+socId+", dont le siège social est sis à "+socAdr+", représentée par "+socRep+", qualité "+socQual+".";
+    const cLines=wrapText(clientText,W-2*M-10,fontR,9.5);
+    cLines.forEach((l,i)=>page.drawText(l,{x:M+6,y:y-i*13,size:9.5,font:fontR,color:BLACK}));
+    y-=cLines.length*13+6;
+    page.drawText("Ci-après dénommée le « Client »",{x:M+6,y,size:9.5,font:fontB,color:BLACK}); y-=18;
+    page.drawText("D'autre part.",{x:M+6,y,size:9.5,font:fontR,color:BLACK}); y-=28;
+
+    hLine(page,y); y-=16;
+
+    // Préambule
+    y=sectionTitle(page,"PRÉAMBULE",y);
+    const preamble="MyBIAT Corporate est une Plateforme d'électronique bancaire mise à la disposition des Clients en vue de leur permettre l'exécution d'opérations bancaires, la consultation des comptes ouverts auprès de la Banque et la communication par messagerie sécurisée. La Plateforme est réservée exclusivement aux personnes morales exerçant sous forme de sociétés et dûment immatriculées.";
+    const pLines=wrapText(preamble,W-2*M-10,fontR,9.5);
+    pLines.forEach((l,i)=>page.drawText(l,{x:M+6,y:y-i*13,size:9.5,font:fontR,color:BLACK}));
+    y-=pLines.length*13+20;
+
+    hLine(page,y); y-=16;
+
+    // Résumé des articles (condensé)
+    const articles=[
+      ["Art. 1 — Objet","Définit les termes et conditions applicables à l'utilisation de la Plateforme MyBIAT Corporate."],
+      ["Art. 2 — Fonctionnalités","En fonction des modules choisis, la Plateforme permet d'effectuer des opérations bancaires en ligne."],
+      ["Art. 3 — Conditions d'accès","Le Client assure la conformité de son matériel informatique et la sécurité des accès (identifiant, mot de passe, OTP)."],
+      ["Art. 4 — Engagements","Le Client garantit être régulièrement constitué et respecter les lois et réglementations applicables."],
+      ["Art. 5 — Administration","Le Client choisit un mode d'Administration Classique, Premium ou Centralisé. Toute modification doit être notifiée par écrit."],
+      ["Art. 6 — Validation des ordres","L'identification via l'application mobile vaut consentement et engage pleinement le Client."],
+      ["Art. 7 — Responsabilités","La Banque est soumise à une obligation de moyens. Sa responsabilité est limitée aux montants versés au titre de la Fonctionnalité en litige."],
+      ["Art. 8 — Facturation","La facturation est forfaitaire. Toute révision tarifaire est notifiée 45 jours à l'avance."],
+      ["Art. 10 — Durée / Résiliation","Abonnement d'un an renouvelable par tacite reconduction. Résiliation avec préavis de 15 jours."],
+      ["Art. 11 — Droit applicable","Convention soumise au droit tunisien. Tribunaux de Tunis compétents."],
+    ];
+    articles.forEach(([titre,texte])=>{
+      if(y<120){ page=newPage(); y=H-60; }
+      page.drawText(titre,{x:M,y,size:9.5,font:fontB,color:BLUE}); y-=13;
+      const ls=wrapText(texte,W-2*M-10,fontR,9);
+      ls.forEach((l,i)=>page.drawText(l,{x:M+8,y:y-i*12,size:9,font:fontR,color:BLACK}));
+      y-=ls.length*12+8;
+    });
+
+    y-=10;
+    hLine(page,y); y-=20;
+    page.drawText("Fait en deux (2) exemplaires originaux, le "+today+" à "+ville,{x:M,y,size:9.5,font:fontR,color:BLACK}); y-=30;
+    sigBlock(page,y,dir,socRep); y-=80;
+
+    // ══════════════════════════════════════════
+    //  PAGE — ANNEXE 1 : Offre / Fonctionnalités
+    // ══════════════════════════════════════════
+    page=newPage(); y=H-60;
+    page.drawText("Annexe 1 — Offre / Fonctionnalités",{x:M,y,size:14,font:fontB,color:BLUE}); y-=24;
+
+    // Type création/modification
+    const typeLbl = convType==="creation" ? "☑ Création   ☐ Modification" : "☐ Création   ☑ Modification";
+    page.drawText("Type : "+typeLbl,{x:M,y,size:10,font:fontR,color:BLACK}); y-=22;
+
+    // Données abonnement
+    y=sectionTitle(page,"Données Abonnement",y);
+    page.drawText("N° Compte de facturation : "+socCpte,{x:M+6,y,size:10,font:fontR,color:BLACK}); y-=30;
+
+    // Tableau modules
+    const colW=[220,100,100];
+    const rowH=24;
+    const headers=["Modules fonctionnels","Classique","Premium"];
+    const moduleRows=[
+      ["Cash Management", modCash&&cashTier==="classique", modCash&&cashTier==="premium"],
+      ["Opérations de masse", false, modMasse],
+      ["Administration société", modAdmin&&adminTier==="classique", modAdmin&&adminTier==="premium"],
+    ];
+    const tX=M; let tY=y;
+
+    // Header
+    page.drawRectangle({x:tX,y:tY-rowH,width:colW[0]+colW[1]+colW[2],height:rowH,color:BLUE});
+    headers.forEach((h,i)=>{
+      const cx=tX+colW.slice(0,i).reduce((a,b)=>a+b,0);
+      page.drawText(h,{x:cx+6,y:tY-rowH+8,size:9.5,font:fontB,color:WHITE});
+    });
+    tY-=rowH;
+
+    moduleRows.forEach((row,ri)=>{
+      const bg = ri%2===0 ? rgb(0.97,0.97,0.97) : WHITE;
+      page.drawRectangle({x:tX,y:tY-rowH,width:colW[0]+colW[1]+colW[2],height:rowH,color:bg,borderColor:rgb(0.8,0.8,0.8),borderWidth:0.5});
+      page.drawText(row[0],{x:tX+6,y:tY-rowH+8,size:9.5,font:fontR,color:BLACK});
+      [row[1],row[2]].forEach((chk,ci)=>{
+        const cx=tX+colW[0]+colW.slice(1,ci+1).reduce((a,b)=>a+b,0)+colW[ci+1]/2-5;
+        page.drawText(chk?"☑":"☐",{x:cx,y:tY-rowH+8,size:11,font:fontR,color:chk?BLUE:GRAY});
+      });
+      tY-=rowH;
+    });
+    y=tY-24;
+
+    hLine(page,y); y-=20;
+    page.drawText("Fait en deux (2) exemplaires originaux, le "+today+" à "+ville,{x:M,y,size:9.5,font:fontR,color:BLACK}); y-=30;
+    sigBlock(page,y,dir,socRep);
+
+    // ══════════════════════════════════════════
+    //  PAGE — ANNEXE 2 : Utilisateurs / Rôles
+    // ══════════════════════════════════════════
+    page=newPage(); y=H-60;
+    page.drawText("Annexe 2 — Utilisateurs / Rôles",{x:M,y,size:14,font:fontB,color:BLUE}); y-=24;
+    const typeLbl2 = convType==="creation" ? "☑ Création   ☐ Modification" : "☐ Création   ☑ Modification";
+    page.drawText("Type : "+typeLbl2,{x:M,y,size:10,font:fontR,color:BLACK}); y-=22;
+
+    // Tableau récap utilisateurs
+    const uColW=[40,100,100,180,80];
+    const uHeaders=["","Nom","Prénom","Email","N° GSM"];
+    page.drawRectangle({x:M,y:y-20,width:uColW.reduce((a,b)=>a+b,0),height:20,color:BLUE});
+    uHeaders.forEach((h,i)=>{
+      const cx=M+uColW.slice(0,i).reduce((a,b)=>a+b,0);
+      page.drawText(h,{x:cx+4,y:y-14,size:8.5,font:fontB,color:WHITE});
+    });
+    y-=20;
+    users.forEach((u,i)=>{
+      const bg=i%2===0?rgb(0.97,0.97,0.97):WHITE;
+      page.drawRectangle({x:M,y:y-18,width:uColW.reduce((a,b)=>a+b,0),height:18,color:bg,borderColor:rgb(0.8,0.8,0.8),borderWidth:0.5});
+      ["User "+(i+1), u.nom, u.prenom, u.email, u.gsm].forEach((v,ci)=>{
+        const cx=M+uColW.slice(0,ci).reduce((a,b)=>a+b,0);
+        const txt=v.length>20&&ci===3?v.substring(0,20)+"…":v;
+        page.drawText(txt||"",{x:cx+4,y:y-13,size:8,font:ci===0?fontB:fontR,color:BLACK});
+      });
+      y-=18;
+    });
+    y-=20;
+
+    // ─── Habilitations par utilisateur ───
+    for(let ui=0;ui<users.length;ui++){
+      const u=users[ui];
+      if(y<200){ page=newPage(); y=H-60; }
+
+      y=sectionTitle(page,"Habilitations — User "+(ui+1)+" : "+u.nom+" "+u.prenom,y);
+
+      // En-tête tableau habilitations
+      const hCols=[180,52,52,52,52,60,60]; // feat + 4 rôles + 2 groupes
+      const hHdrs=["Fonctionnalité",...roles,...groupes];
+      const tW=hCols.reduce((a,b)=>a+b,0);
+      page.drawRectangle({x:M,y:y-18,width:tW,height:18,color:BLUE});
+      hHdrs.forEach((h,i)=>{
+        const cx=M+hCols.slice(0,i).reduce((a,b)=>a+b,0);
+        page.drawText(h,{x:cx+2,y:y-13,size:7,font:fontB,color:WHITE});
+      });
+      y-=18;
+
+      let catPrev="";
+      u.habs.forEach((row,ri)=>{
+        // Trouver la catégorie
+        let cat="";
+        feats.forEach(f=>{ if(f.items.includes(row.feat)) cat=f.cat; });
+        if(cat!==catPrev){
+          if(y<80){ page=newPage(); y=H-60; }
+          page.drawRectangle({x:M,y:y-16,width:tW,height:16,color:LBLUE});
+          page.drawText(cat,{x:M+4,y:y-11,size:8,font:fontB,color:BLUE});
+          y-=16; catPrev=cat;
+        }
+
+        if(y<60){ page=newPage(); y=H-60; }
+        const bg=ri%2===0?rgb(0.98,0.98,0.98):WHITE;
+        page.drawRectangle({x:M,y:y-16,width:tW,height:16,color:bg,borderColor:rgb(0.85,0.85,0.85),borderWidth:0.3});
+
+        // Fonctionnalité (tronquée si besoin)
+        const feat=row.feat.length>28?row.feat.substring(0,28)+"…":row.feat;
+        page.drawText(feat,{x:M+3,y:y-11,size:7.5,font:fontR,color:BLACK});
+
+        // Rôles
+        roles.forEach((r,i)=>{
+          const cx=M+hCols[0]+hCols.slice(1,i+1).reduce((a,b)=>a+b,0)+hCols[i+1]/2-5;
+          const chk=row.roles[r];
+          page.drawText(chk?"☑":"☐",{x:cx,y:y-11,size:9,font:fontR,color:chk?BLUE:rgb(0.7,0.7,0.7)});
+        });
+        // Groupes
+        groupes.forEach((g,i)=>{
+          const cx=M+hCols[0]+hCols.slice(1,roles.length+1).reduce((a,b)=>a+b,0)+hCols.slice(roles.length+1,roles.length+i+1).reduce((a,b)=>a+b,0)+hCols[roles.length+i+1]/2-5;
+          const chk=row.groupes[g];
+          page.drawText(chk?"☑":"☐",{x:cx,y:y-11,size:9,font:fontR,color:chk?BLUE:rgb(0.7,0.7,0.7)});
+        });
+        y-=16;
+      });
+
+      y-=8;
+      page.drawText("(*) Administration accordée suivant l'offre choisie à l'Annexe 1.  (**) Validation requiert l'approbation d'un valideur.",{x:M,y,size:7.5,font:fontR,color:GRAY});
+      y-=18;
+      page.drawText("Fait en deux (2) exemplaires originaux, le "+today+" à "+ville,{x:M,y,size:9,font:fontR,color:BLACK}); y-=28;
+      sigBlock(page,y,dir,socRep); y-=90;
+    }
+
+    // ── Sauvegarde ──
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes],{type:"application/pdf"});
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href = url;
+    const nomFich=(getVal("soc_nom")||"client").replace(/\s+/g,"_");
+    a.download = "Convention_MyBIAT_"+nomFich+".pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+
+  } catch(err){
+    alert("Erreur lors de la génération : "+err.message);
+    console.error(err);
+  } finally {
+    btn.disabled=false;
+    btn.textContent="⬇ Générer et télécharger le contrat PDF";
+  }
+}
+
+buildUserTabs();
+</script>
+</body>
+</html>
