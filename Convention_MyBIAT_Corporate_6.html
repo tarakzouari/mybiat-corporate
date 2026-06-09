@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convention MyBIAT Corporate</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;background:#f4f6f9;color:#1a1a2e;padding:2rem 1rem}
+  .container{max-width:760px;margin:0 auto}
+  .header{text-align:center;margin-bottom:2rem}
+  .header h1{font-size:22px;font-weight:700;color:#1E5FA5}
+  .header p{font-size:14px;color:#666;margin-top:6px}
+  .card{background:#fff;border-radius:12px;border:1px solid #e0e6ed;padding:1.5rem;margin-bottom:1.25rem}
+  .card-title{font-size:15px;font-weight:700;color:#1E5FA5;margin-bottom:1rem;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e8edf2;padding-bottom:10px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .field-row.single{grid-template-columns:1fr}
+  .field{display:flex;flex-direction:column;gap:5px}
+  label.fl{font-size:12px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:0.4px}
+  input[type=text],input[type=email],select{height:38px;padding:0 12px;border:1px solid #d0d8e4;border-radius:8px;font-size:14px;color:#1a1a2e;background:#fff;width:100%;transition:border 0.2s}
+  input:focus,select:focus{outline:none;border-color:#1E5FA5;box-shadow:0 0 0 3px rgba(30,95,165,0.1)}
+  .type-row{display:flex;gap:10px;margin-bottom:1rem}
+  .type-btn{flex:1;padding:10px;border:1.5px solid #d0d8e4;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:#888;text-align:center;transition:all 0.2s}
+  .type-btn.active{background:#EBF3FB;color:#1E5FA5;border-color:#1E5FA5}
+  .modules-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .module-card{border:1px solid #e0e6ed;border-radius:8px;padding:12px}
+  .module-card.full{grid-column:span 2}
+  .module-card label.main{font-size:13px;font-weight:700;color:#1a1a2e;cursor:pointer;display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0}
+  .module-card .sub{font-size:12px;color:#888;margin-top:6px;margin-left:24px}
+  .radio-row{display:flex;gap:16px;margin-top:10px;margin-left:24px}
+  .radio-row label{font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-weight:500;color:#333}
+  .user-tab-row{display:flex;gap:6px;margin-bottom:1rem;flex-wrap:wrap}
+  .user-tab{padding:7px 16px;border-radius:20px;border:1px solid #d0d8e4;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:#888;transition:all 0.2s}
+  .user-tab.active{background:#1E5FA5;color:#fff;border-color:#1E5FA5}
+  .user-panel{display:none}
+  .user-panel.active{display:block}
+  .hab-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
+  .hab-table th{background:#1E5FA5;color:#fff;padding:8px 6px;text-align:center;font-weight:600;border:1px solid #1a5090;font-size:11px}
+  .hab-table th.left{text-align:left;padding-left:10px}
+  .hab-table td{padding:7px 6px;border:1px solid #e0e6ed;text-align:center;font-size:12px}
+  .hab-table td.feat{text-align:left;color:#444;padding-left:10px}
+  .hab-table td.cat{font-weight:700;background:#EBF3FB;color:#1E5FA5;text-align:left;padding-left:10px;font-size:12px}
+  .hab-table input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#1E5FA5}
+  .nb-users-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+  .nb-users-row label{font-size:13px;font-weight:600;color:#555}
+  .nb-users-row select{width:80px}
+  .btn-generate{width:100%;height:48px;background:#1E5FA5;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:0.5rem;transition:background 0.2s}
+  .btn-generate:hover{background:#0C447C}
+  .btn-generate:disabled{background:#aaa;cursor:not-allowed}
+  .biat-logo-box{display:inline-block;background:#1E5FA5;color:#fff;font-size:20px;font-weight:900;padding:8px 18px;border-radius:6px;letter-spacing:1px;margin-bottom:1rem}
+  .biat-slash{color:#E8333A}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div><span class="biat-logo-box"><span class="biat-slash">/</span> BIAT</span></div>
+    <h1>Convention d'adhesion a MyBIAT Corporate</h1>
+    <p>Remplissez ce formulaire - le contrat PDF se genere automatiquement.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Informations agence BIAT</div>
+    <div class="field-row">
+      <div class="field"><label class="fl">Nom du directeur d'agence</label><input type="text" id="dir_nom"></div>
+      <div class="field"><label class="fl">Nom de l'agence</label><input type="text" id="agence_nom"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="fl">Code agence</label><input type="text" id="agence_code"></div>
+      <div class="field"><label class="fl">Ville de signature</label><input type="text" id="ville"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Informations entreprise (client)</div>
+    <div class="field-row single">
+      <div class="field"><label class="fl">Denomination sociale et forme juridique</label><input type="text" id="soc_nom"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="fl">Identifiant Unique (matricule fiscal)</label><input type="text" id="soc_id"></div>
+      <div class="field"><label class="fl">N° compte de facturation</label><input type="text" id="soc_compte"></div>
+    </div>
+    <div class="field-row single">
+      <div class="field"><label class="fl">Adresse du siege social</label><input type="text" id="soc_adresse"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="fl">Representant legal (nom complet)</label><input type="text" id="soc_rep"></div>
+      <div class="field"><label class="fl">Qualite / Fonction</label><input type="text" id="soc_qualite"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Offre souscrite - Annexe 1</div>
+    <div class="type-row">
+      <div class="type-btn active" id="btn_creation" onclick="setType('creation')">Creation</div>
+      <div class="type-btn" id="btn_modif" onclick="setType('modification')">Modification</div>
+    </div>
+    <div class="modules-grid">
+      <div class="module-card">
+        <label class="main"><input type="checkbox" id="mod_cash" onchange="toggleSub('sub_cash',this.checked)"> Cash Management</label>
+        <div class="sub">Virements, consultation comptes &amp; cartes</div>
+        <div class="radio-row" id="sub_cash" style="display:none">
+          <label><input type="radio" name="cash_tier" value="classique" checked> Classique</label>
+          <label><input type="radio" name="cash_tier" value="premium"> Premium</label>
+        </div>
+      </div>
+      <div class="module-card">
+        <label class="main"><input type="checkbox" id="mod_masse"> Operations de masse</label>
+        <div class="sub">Virements multiples, salaires, prelevements</div>
+      </div>
+      <div class="module-card full">
+        <label class="main"><input type="checkbox" id="mod_admin" onchange="toggleSub('sub_admin',this.checked)"> Administration societe</label>
+        <div class="sub">Gestion des droits et roles utilisateurs</div>
+        <div class="radio-row" id="sub_admin" style="display:none">
+          <label><input type="radio" name="admin_tier" value="classique" checked> Classique</label>
+          <label><input type="radio" name="admin_tier" value="premium"> Premium</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Utilisateurs &amp; habilitations - Annexe 2</div>
+    <div class="nb-users-row">
+      <label>Nombre d'utilisateurs :</label>
+      <select id="nb_users" onchange="buildUserTabs()">
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div class="user-tab-row" id="user_tabs"></div>
+    <div id="user_panels"></div>
+  </div>
+
+  <button class="btn-generate" id="btn_gen" onclick="generatePDF()">Generer et telecharger le contrat PDF</button>
+</div>
+
+<script>
+const feats = [
+  {cat:"1- Cash Management :", items:[
+    "Consultation compte (extrait de compte et liste des comptes)",
+    "Consultation carte (extrait de carte et liste des cartes)",
+    "Consultation releve monetique",
+    "Liste des placements",
+    "Virement unitaire",
+    "Chargement carte",
+    "Telechargement",
+    "Chequier",
+    "Association RIB et Num tel au compte TuniCheque",
+    "Pre-reservation de cheque",
+    "Consultation AVA",
+    "Gestion des valeurs (Suivi des effets & cheques)",
+    "Consultation des operations de commerce exterieur***"
+  ]},
+  {cat:"2- Operations de masse** :", items:[
+    "Virements multiples fournisseurs",
+    "Virements multiples Salaires",
+    "Chargement carte multiple",
+    "Virement multiple International",
+    "Prelevement multiple"
+  ]},
+  {cat:"3- Administration societe (Classique / Premium)*", items:[
+    "Administration societe"
+  ]},
+  {cat:"4- Assistance (gestion des messages et reclamation)", items:[
+    "Assistance"
+  ]}
+];
+const roles = ["Consultation","Initiateur","**Valideur","Administrateur"];
+const groupes = ["Tous les comptes/cartes","Groupe de comptes personnalise"];
+let convType = "creation";
+
+function setType(t){
+  convType=t;
+  document.getElementById("btn_creation").className="type-btn"+(t==="creation"?" active":"");
+  document.getElementById("btn_modif").className="type-btn"+(t==="modification"?" active":"");
+}
+function toggleSub(id,show){ document.getElementById(id).style.display=show?"flex":"none"; }
+function getVal(id){ const e=document.getElementById(id); return e?e.value.trim():""; }
+function getChk(id){ const e=document.getElementById(id); return e&&e.checked; }
+function getRadio(name){ const e=document.querySelector('input[name="'+name+'"]:checked'); return e?e.value:""; }
+
+function buildUserTabs(){
+  const n=parseInt(document.getElementById("nb_users").value);
+  const tabs=document.getElementById("user_tabs");
+  const panels=document.getElementById("user_panels");
+  tabs.innerHTML=""; panels.innerHTML="";
+  for(let i=1;i<=n;i++){
+    const tab=document.createElement("div");
+    tab.className="user-tab"+(i===1?" active":"");
+    tab.textContent="Utilisateur "+i;
+    (function(idx){
+      tab.onclick=function(){
+        document.querySelectorAll(".user-tab").forEach(t=>t.classList.remove("active"));
+        document.querySelectorAll(".user-panel").forEach(p=>p.classList.remove("active"));
+        this.classList.add("active");
+        document.getElementById("panel_user_"+idx).classList.add("active");
+      };
+    })(i);
+    tabs.appendChild(tab);
+    const panel=document.createElement("div");
+    panel.className="user-panel"+(i===1?" active":"");
+    panel.id="panel_user_"+i;
+    panel.innerHTML=
+      '<div class="field-row">'+
+        '<div class="field"><label class="fl">Nom</label><input type="text" id="u'+i+'_nom"></div>'+
+        '<div class="field"><label class="fl">Prenom</label><input type="text" id="u'+i+'_prenom"></div>'+
+      '</div>'+
+      '<div class="field-row">'+
+        '<div class="field"><label class="fl">Email</label><input type="email" id="u'+i+'_email"></div>'+
+        '<div class="field"><label class="fl">N° GSM</label><input type="text" id="u'+i+'_gsm"></div>'+
+      '</div>'+
+      '<p style="font-size:13px;color:#666;margin:14px 0 6px;font-weight:600;">Habilitations :</p>'+
+      buildHabTable(i);
+    panels.appendChild(panel);
+  }
+}
+
+function buildHabTable(uid){
+  let h='<table class="hab-table"><thead><tr>'+
+    '<th class="left" style="width:34%">Fonctionnalite</th>'+
+    roles.map(r=>'<th>'+r+'</th>').join("")+
+    groupes.map(g=>'<th>'+g+'</th>').join("")+
+    '</tr></thead><tbody>';
+  feats.forEach(f=>{
+    h+='<tr><td class="cat" colspan="'+(1+roles.length+groupes.length)+'">'+f.cat+'</td></tr>';
+    f.items.forEach(item=>{
+      const key=item.replace(/[^a-z0-9]/gi,"_").toLowerCase();
+      h+='<tr><td class="feat">'+item+'</td>';
+      roles.forEach(r=>{ const rid=r.replace(/[^a-z]/gi,"").toLowerCase(); h+='<td><input type="checkbox" id="u'+uid+'_'+key+'_'+rid+'"></td>'; });
+      groupes.forEach(g=>{ const gid=g.replace(/[^a-z]/gi,"").toLowerCase(); h+='<td><input type="checkbox" id="u'+uid+'_'+key+'_'+gid+'"></td>'; });
+      h+='</tr>';
+    });
+  });
+  return h+'</tbody></table>';
+}
+
+// ==================== PDF ====================
+async function generatePDF(){
+  if(typeof PDFLib==="undefined"){ alert("Librairie PDF pas encore chargee. Patientez et reessayez."); return; }
+  const btn=document.getElementById("btn_gen");
+  btn.disabled=true; btn.textContent="Generation en cours...";
+  try{
+    const {PDFDocument,rgb,StandardFonts}=PDFLib;
+    const n=parseInt(document.getElementById("nb_users").value);
+    const dir=getVal("dir_nom")||"..................................";
+    const agence=getVal("agence_nom")||"..............";
+    const code=getVal("agence_code")||"....";
+    const ville=getVal("ville")||"....................";
+    const socNom=getVal("soc_nom")||"..................................";
+    const socId=getVal("soc_id")||"....................";
+    const socAdr=getVal("soc_adresse")||"....................";
+    const socRep=getVal("soc_rep")||"..................................";
+    const socQual=getVal("soc_qualite")||"....................";
+    const socCpte=getVal("soc_compte")||"....................";
+    const today=new Date().toLocaleDateString("fr-TN");
+    const modCash=getChk("mod_cash");
+    const cashTier=modCash?getRadio("cash_tier"):"";
+    const modMasse=getChk("mod_masse");
+    const modAdmin=getChk("mod_admin");
+    const adminTier=modAdmin?getRadio("admin_tier"):"";
+
+    const users=[];
+    for(let i=1;i<=n;i++){
+      const habs=[];
+      feats.forEach(f=>{
+        f.items.forEach(item=>{
+          const key=item.replace(/[^a-z0-9]/gi,"_").toLowerCase();
+          const row={feat:item,cat:f.cat,roles:{},groupes:{}};
+          roles.forEach(r=>{ const rid=r.replace(/[^a-z]/gi,"").toLowerCase(); row.roles[r]=getChk("u"+i+"_"+key+"_"+rid); });
+          groupes.forEach(g=>{ const gid=g.replace(/[^a-z]/gi,"").toLowerCase(); row.groupes[g]=getChk("u"+i+"_"+key+"_"+gid); });
+          habs.push(row);
+        });
+      });
+      users.push({nom:getVal("u"+i+"_nom"),prenom:getVal("u"+i+"_prenom"),email:getVal("u"+i+"_email"),gsm:getVal("u"+i+"_gsm"),habs});
+    }
+
+    const pdfDoc=await PDFDocument.create();
+    const fontR=await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontB=await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+    const BLUE=rgb(0.118,0.373,0.647);
+    const LBLUE=rgb(0.839,0.914,0.969);
+    const WHITE=rgb(1,1,1);
+    const BLACK=rgb(0,0,0);
+    const GRAY=rgb(0.5,0.5,0.5);
+    const LGRAY=rgb(0.96,0.96,0.96);
+    const W=595,H=842,ML=45,MR=45;
+    const TW=W-ML-MR;
+
+    function addPage(){
+      const pg=pdfDoc.addPage([W,H]);
+      pg.drawRectangle({x:0,y:H-32,width:W,height:32,color:BLUE});
+      pg.drawText("/ BIAT",{x:16,y:H-21,size:13,font:fontB,color:WHITE});
+      pg.drawText("Convention d'adhesion a MyBIAT Corporate",{x:72,y:H-21,size:9,font:fontR,color:WHITE});
+      return pg;
+    }
+
+    function wrap(text,maxW,font,sz){
+      const words=text.split(" ");
+      const lines=[];let cur="";
+      words.forEach(w=>{
+        const t=cur?cur+" "+w:w;
+        if(font.widthOfTextAtSize(t,sz)<=maxW){cur=t;}
+        else{if(cur)lines.push(cur);cur=w;}
+      });
+      if(cur)lines.push(cur);
+      return lines;
+    }
+
+    // draw paragraph, returns new y
+    function drawPara(pg,text,x,y,maxW,sz,font,lh,color){
+      color=color||BLACK;
+      const lines=wrap(text,maxW,font,sz);
+      lines.forEach((l,i)=>pg.drawText(l,{x,y:y-i*lh,size:sz,font,color}));
+      return y-lines.length*lh;
+    }
+
+    function checkPage(pg,y,needed){
+      if(y<needed){pg=addPage();y=H-50;}
+      return {pg,y};
+    }
+
+    function sectionBar(pg,text,y){
+      pg.drawRectangle({x:ML,y:y-5,width:TW,height:18,color:LBLUE});
+      pg.drawText(text,{x:ML+5,y:y+1,size:10,font:fontB,color:BLUE});
+      return y-24;
+    }
+
+    function hline(pg,y){
+      pg.drawLine({start:{x:ML,y},end:{x:W-MR,y},thickness:0.4,color:rgb(0.75,0.75,0.75)});
+    }
+
+    function sigBlock(pg,y,banque,client){
+      pg.drawText("Signature de la Banque",{x:ML,y,size:9,font:fontB,color:BLACK});
+      pg.drawText("P/ "+banque,{x:ML,y:y-13,size:9,font:fontR,color:BLACK});
+      pg.drawRectangle({x:ML,y:y-52,width:160,height:34,borderColor:GRAY,borderWidth:0.5,color:LGRAY});
+      pg.drawText("Signature (s) du Client",{x:W-MR-200,y,size:9,font:fontB,color:BLACK});
+      pg.drawText(client,{x:W-MR-200,y:y-13,size:9,font:fontR,color:BLACK});
+      pg.drawRectangle({x:W-MR-200,y:y-52,width:160,height:34,borderColor:GRAY,borderWidth:0.5,color:LGRAY});
+    }
+
+    // =============================================
+    // PAGES 1-8 : CONVENTION COMPLETE MOT PAR MOT
+    // =============================================
+    let pg=addPage(); let y=H-48;
+    const S=9.5; const LH=13; const SB=10; const SLH=12;
+
+    pg.drawText("Convention d'adhesion a MyBIAT Corporate",{x:ML,y,size:14,font:fontB,color:BLUE}); y-=28;
+
+    y=sectionBar(pg,"ENTRE LES SOUSSIGNEES :",y);
+
+    let r;
+    r=checkPage(pg,y,60);pg=r.pg;y=r.y;
+    y=drawPara(pg,"La Banque Internationale Arabe de Tunisie, << BIAT >>, Societe Anonyme, au capital social de 204 000 000 Dinars, inscrite au Registre National des Entreprises sous l'Identifiant Unique n° 0000110 F, dont le siege social est sis a Tunis, 70-72 Avenue Habib Bourguiba Tunis 1080, representee par Monsieur / Madame "+dir+", Directeur de l'agence "+agence+" ("+code+").",ML+4,y,TW-4,S,fontR,LH)-4;
+    pg.drawText("Ci-apres denommee la << Banque >>,",{x:ML+4,y,size:S,font:fontB,color:BLACK}); y-=LH+2;
+    pg.drawText("D'une part,",{x:ML+4,y,size:S,font:fontB,color:BLACK}); y-=LH+4;
+    pg.drawText("ET",{x:ML+4,y,size:S,font:fontB,color:BLACK}); y-=LH+2;
+    y=drawPara(pg,"La Societe (denomination sociale et forme juridique) "+socNom+", inscrite au Registre National des Entreprises, sous l'Identifiant Unique n° "+socId+", dont le siege social est sis a (adresse) "+socAdr+", representee par "+socRep+" qualite "+socQual,ML+4,y,TW-4,S,fontR,LH)-4;
+    pg.drawText("Ci-apres denommee le << Client >>",{x:ML+4,y,size:S,font:fontB,color:BLACK}); y-=LH+2;
+    pg.drawText("D'autre part.",{x:ML+4,y,size:S,font:fontB,color:BLACK}); y-=LH+4;
+    y=drawPara(pg,"Le Client et la Banque sont, ci-apres, collectivement designes les << Parties >> et separement la << Partie >>.",ML+4,y,TW-4,S,fontR,LH); y-=10;
+
+    r=checkPage(pg,y,20);pg=r.pg;y=r.y;
+    y=sectionBar(pg,"PREAMBULE",y);
+    y=drawPara(pg,"MyBIAT Corporate est une Plateforme d'electronique bancaire, ci-apres denommee la << Plateforme >> mise a la disposition des Clients en vue de leur permettre l'execution d'operations bancaires, la consultation des comptes ouverts aupres de la Banque et la communication par messagerie securisee avec celle-ci.",ML+4,y,TW-4,S,fontR,LH); y-=4;
+    y=drawPara(pg,"La Plateforme est reservee exclusivement aux personnes morales exercant sous forme de societes et dument immatriculees au regard de la legislation de l'Etat de leur siege social.",ML+4,y,TW-4,S,fontR,LH); y-=10;
+
+    r=checkPage(pg,y,20);pg=r.pg;y=r.y;
+    y=sectionBar(pg,"CECI EXPOSE, IL EST CONVENU ENTRE LES PARTIES CE QUI SUIT :",y);
+    y=sectionBar(pg,"DEFINITIONS",y);
+
+    const defs=[
+      ["<< Administration Societe >>","ensemble des actes accomplis par la societe afin de definir les Fonctionnalites utilisees par ses Utilisateurs, definir, notamment, leurs autorisations respectives, de meme que les operations qu'ils seront habilites a effectuer au moyen de la Plateforme, determiner les niveaux de signature, ainsi que les regles de validation pour chaque categorie d'operation."],
+      ["<< Administration centralisee >>","le service propose par la banque afin de definir sur MyBIAT Corporate les habilitations demandees par la societe a ses utilisateurs de MyBIAT Corporate : les autorisations, les operations qu'ils seront habilites a effectuer au moyen de la Plateforme, les niveaux de signature, ainsi que les regles de validation pour chaque categorie d'operation."],
+      ["<< Administrateur Societe >>","toute personne physique designee, dans les conditions definies dans la Convention, responsable des actes d'attribution, a chaque Utilisateur, des Fonctionnalites et des droits d'acces aux donnees et aux operations."],
+      ["<< Fonctionnalite >>","service choisi par le Client dans le cadre de la Plateforme."],
+      ["<< Site >>","site Internet permettant l'acces a la Plateforme."],
+      ["<< Utilisateur >>","toute personne physique expressement habilitee, dans les conditions definies dans la Convention, a utiliser une ou plusieurs Fonctionnalites et titulaires des acces correspondants."],
+      ["<< Role de reference >>","Il s'agit de profils predefinis par la Banque reprenant les autorisations necessaires pour acceder et utiliser la Plateforme. Ces profils sont detailles a l'Annexe."],
+      ["<< Niveaux de validation >>","il existe 3 niveau de validation A, B et C. Pour chaque valideur l'entreprise attribue le niveau de validation qu'elle souhaite."]
+    ];
+    defs.forEach(([terme,def])=>{
+      r=checkPage(pg,y,40);pg=r.pg;y=r.y;
+      y=drawPara(pg,terme+" : "+def,ML+4,y,TW-4,SB,fontR,SLH); y-=4;
+    });
+    y-=6;
+
+    const articles=[
+      ["Article 1 - Objet",
+       "La presente Convention a pour objet de definir les termes et les conditions applicables a l'utilisation de la Plateforme MyBIAT Corporate et de fixer les modalites par lesquelles la Banque fournit les moyens et l'assistance techniques necessaires au Client.\nLes Fonctionnalites ainsi que toute autre obligation decoulent de la relation contractuelle etablie entre les Parties, au titre de la presente Convention, sont executees conformement aux presentes stipulations.\nDans le cadre de la Plateforme, la Banque agit exclusivement a titre de prestataire d'un service technique."],
+      ["Article 2 - Description et Fonctionnalites de MyBIAT Corporate",
+       "En fonction du ou des modules choisi(s) par le Client, la Plateforme MyBIAT Corporate permet a ce dernier d'effectuer des operations bancaires.\nDans le cadre de la presente Convention, le Client autorise la Banque, qui l'accepte, a executer les instructions relatives a son / ses comptes bancaires comme etant valablement emises par lui."],
+      ["Article 3 - Conditions d'acces et d'utilisation de MyBIAT Corporate\n3.1 Materiel informatique",
+       "Pour l'utilisation de la Plateforme, le Client doit disposer d'un micro-ordinateur equipe d'un acces au reseau internet et d'un logiciel de navigation. L'ensemble des frais de communication par internet et par telephone est a la charge exclusive du Client.\nLe Client assure :\n- la location et/ou l'achat, l'installation, l'entretien et la maintenance de l'ensemble du materiel et de l'equipement informatique, du logiciel de navigation et des connexions internet avec le Site necessaires au fonctionnement de la Plateforme (ci-apres designes ensemble le << Systeme Informatique >>),\n- le bon fonctionnement de son Systeme Informatique,\n- la conclusion des contrats de licence d'utilisation de logiciels et d'abonnement pour l'acces a Internet.\nEn aucun cas, la Banque n'aura l'obligation de corriger une erreur ou un vice de quelque nature qu'il soit dans le Systeme Informatique du Client, ni d'assurer des services de maintenance a cet effet.\nLe Client s'assure, sous sa propre responsabilite, de la compatibilite de son materiel et des logiciels destines a utiliser les Fonctionnalites et de la securite de son Systeme Informatique et reconnait que cette derniere doit etre elevee, compte tenu de la nature des services et des echanges entre lui et la Banque. A ce titre, il appartient au Client de prendre toutes les mesures appropriees afin de proteger son Systeme Informatique et ses donnees contre toute contamination par des virus et tentatives d'intrusion.\nEn outre, le Client s'engage a ce que son Systeme Informatique ne soit pas surchage et soit en toutes circonstances, exempt de tout virus, defaut ou erreur susceptible de nuire au bon fonctionnement de la Plateforme. A ce titre, le Client s'engage a indemniser la Banque et a la degager de toute responsabilite en cas de dysfonctionnement, de retard ou de probleme dans l'execution de la Plateforme, des Fonctionnalites et/ou dans le maintien en fonctionnement du Site resultant d'un manquement aux presentes dispositions."],
+      ["3.2 Acces a la Plateforme et securite",
+       "L'acces a la Plateforme se fait par une connexion internet a l'adresse suivante : << onlinecorporate.mybiat.tn >>\nCet acces n'est possible qu'au moyen d'un identifiant et d'un mot de passe. La mise a disposition par la Banque de moyens d'acces personnels : identifiant, mot de passe et SMS OTP, sont possibles selon les specificites techniques du peripherique utilise pour acceder a la Plateforme.\nL'identifiant et les mots de passe necessaires pour acceder a la Plateforme sont strictement confidentiels. Il est de la responsabilite du Client de veiller a ce que les Utilisateurs les conservent secrets et ne les divulguent a qui que ce soit. Il lui appartient de s'assurer que la conservation et la saisie des mots de passe et de l'identifiant soient effectuees dans des conditions parfaites de securite et de confidentialite.\nLe Client est seul responsable de la conservation, de l'utilisation et de la securite des parametres d'acces, le cas echeant, des consequences de leur divulgation ou de leur utilisation par des tiers. Il s'engage a signaler a la Banque tout usage abusif ou frauduleux de l'identifiant et/ou des mots de passe dans les plus brefs delais et par tous moyens, et de confirmer sans delai a la Banque cette perte ou cet usage abusif par lettre recommandee.\nLa Banque doit etre informee de toute cessation d'habilitation interne d'un Utilisateur de telle sorte qu'elle puisse, apres acceptation et traitement, activer ou desactiver le compte de l'Utilisateur concerne.\nLa Banque pourra suspendre ou interrompre tout ou partie d'une Fonctionnalite et/ou l'acces a la Plateforme du Client si elle decouvre des faits presumant un usage frauduleux ou une tentative d'usage frauduleux de ladite Plateforme ; dans ce cas, la Banque en informera dans les meilleurs delais le Client.\nIl appartient au Client de veiller a l'utilisation legitime de la Plateforme par le(s) Administrateur(s) et le(s) Utilisateur(s) et de degager la Banque de toute responsabilite a cet egard."],
+      ["3.3 Gestion des Fonctionnalites de la Plateforme",
+       "Le Client doit, a tout moment, aviser la Banque par ecrit de toute modification affectant les Fonctionnalites souscrites en retournant la demande d'adhesion a MyBIAT Corporate modifiee.\nLa modification prend effet des que la notification correspondante aura ete traitee par la Banque.\nLe Client est responsable du controle et de la verification des operations realisees dans le cadre de l'utilisation de la Plateforme, en particulier au regard des regles relatives a la prevention du blanchiment de capitaux, du respect des sanctions nationales ou internationales ou des regles internes de la Banque en matiere de conformite (par exemple, interdictions...).\nEn outre, le Client reconnait expressement et prend acte que la Banque n'a aucune responsabilite quelle qu'elle soit concernant le controle, l'information, le conseil et la veracite des operations financieres eu egard aux operations effectuees au moyen de la Plateforme.\nLe Client s'engage a indemniser immediatement la Banque et a la degager de toute responsabilite, en cas de reclamation emanant de tiers, fondee sur un usage impropre de la Plateforme par le Client."],
+      ["Article 4 - Engagements et garanties du Client",
+       "Le Client declare et garantit a la Banque, pendant toute la duree de la presente Convention, qu'il :\n- est regulierement constitue au regard du droit qui lui est applicable ;\n- est juridiquement habilite, conformement aux exigences des reglementations qui lui sont applicables, notamment au regard du droit des societes, a participer aux operations realisables dans le cadre de la Plateforme ;\n- respecte et respectera les lois et reglementations applicables, notamment en ce qui concerne la legalite des operations auxquelles il est parti au titre de la presente Convention ;\n- respecte et respectera les lois fiscales et/ou les lois en matiere de controle des changes de tout pays qui lui sont applicables du fait de son utilisation de la Plateforme.\nD'une maniere generale, le Client s'engage a ne pas utiliser, et a ne pas permettre a l'un quelconque des Administrateurs, Utilisateurs ou tiers, d'utiliser, ou d'acceder a la Plateforme pour des activites ou a des fins illegales."],
+      ["Article 5 - Modalites de gestion et d'Administration de MyBIAT Corporate",
+       "Lors de l'adhesion a la Convention, le Client peut choisir entre le mode d'Administration Locale Classique ou le mode d'Administration Locale Premium. Toutefois le Client peut opter aussi pour un mode d'Administration Centralisee au niveau de la Banque. Dans le cas d'une administration centralisee premium le client definit les profils personnalises des utilisateurs et/ou les groupes de comptes personnalises et/ou niveaux de validation personnalises en renseignant les annexes 4 et/ou 5 et/ou 6 selon le besoin formule."],
+      ["5.1 Gestion des pouvoirs d'Administration",
+       "Dans le cadre du mode d'Administration Societe Classique, l'Administrateur designe a les attributions suivantes :\n- Attribution et retrait aux Utilisateurs de la Plateforme des roles de reference ;\nLes Fonctionnalites associees a chacun des roles de reference sont decrites dans l'annexe 1.\n- Retrait ou modification des Utilisateurs designes dans les roles de reference.\nDans le cadre du mode d'Administration Societe Premium, l'Administrateur designe a les attributions suivantes :\n- Definition des droits de chaque Utilisateur en matiere d'utilisation de la Plateforme, y compris l'acces aux comptes et (i) certains montants (limitation des autorisations de l'Utilisateur en fonction des montants), (ii) certaines Fonctionnalites (par exemple, virement multiples salaires, consultation des comptes..), (iii) certaines creations/validations de paiements (par exemple, limitation de l'autorisation de valider des paiements), et (iv) certains niveaux de signature et, eventuellement, fixation des regles en matiere de delegation (par exemple, simple ou double signature).\n- Creation de roles personnalises en fonction des modules souscrits par le Client ;\n- Attribution et retrait aux Utilisateurs de la Plateforme des roles de reference et des roles personnalises ;\n- Gestion des groupes de comptes ;\n- Attribution et modification des differentes politiques de validation.\nToute creation d'Utilisateurs fera l'objet de la signature d'une mise a jour de la presente Convention."],
+      ["5.2 Designation du / des Administrateur(s)",
+       "La designation d'une personne en qualite d'Administrateur Societe vaut delivrance d'un pouvoir specifique dans le cadre de l'utilisation de la Plateforme MyBIAT Corporate et de ses Fonctionnalites.\nLors de la designation d'un Administrateur, la Societe doit fournir, pour chaque Administrateur designe, une copie de sa carte d'identite nationale (ou autre piece d'identite nationale equivalente) et l'acceptation expresse de l'Administrateur sur l'etendue du mandat qu'il lui confere, (conformement aux roles de reference et attributions detailles dans l'annexe 1), qui auront seules, valeur probante entre les Parties.\nDans le cadre d'une Administration Societe, le Client demeure seul responsable des actes de l'Administrateur, en particulier, de l'attribution a chaque Utilisateur des Fonctionnalites et des droits d'acces aux donnees et aux operations. Ces droits determinent ce que chaque Utilisateur peut visualiser et realiser dans le cadre de la Plateforme.\nNonobstant le mode d'Administration de la Plateforme, le controle et la supervision des Utilisateurs ayant le droit d'acceder a la Plateforme et de l'utiliser, relevent de la responsabilite du Client.\nToute modification de l'identite ou des pouvoirs des Administrateurs doit etre notifiee a la Banque dans les meilleurs delais par l'envoi de la Convention d'adhesion mise a jour. Cette modification prendra effet des que la notification correspondante aura ete acceptee et traitee par la Banque."],
+      ["5.3 Designation et droits des Utilisateurs",
+       "Lors de la designation d'un Utilisateur, l'Administrateur Societe doit fournir a la Banque, pour chaque Utilisateur designe disposant des pouvoirs de faire mouvementer un ou plusieurs des comptes bancaires, une copie de sa carte d'identite nationale (ou tout document d'identite nationale equivalent) et quels que soient les pouvoirs de l'Utilisateur, son acceptation expresse sur l'etendue du mandat qu'il lui confere, conformement aux roles de reference et attributions detailles dans l'annexe 1, qui auront seules, valeur probante entre les Parties.\nLa designation d'une personne en qualite d'Utilisateur de la Plateforme vaut delivrance a cette personne d'un mandat specifique dans le cadre de l'utilisation de la Plateforme et de ses Fonctionnalites.\nDans la limite des droits qui leur ont ete conferes, les Utilisateurs sont seuls autorises a acceder aux Fonctionnalites de la Plateforme. Un Administrateur Societe ne peut executer des taches operationnelles ou transactionnelles dans le cadre de la Plateforme tels que des paiements, sauf a avoir egalement ete designe comme Utilisateur.\nIl est egalement rappele au Client que conformement aux regles du droit commun du mandat, toute operation effectuee, ou reputee telle, par un Administrateur Societe et/ou un Utilisateur engage son mandant, comme si elle avait ete effectuee par lui-meme."],
+      ["Article 6 - Validation des ordres",
+       "Le Client reconnait que l'identification des Utilisateurs/Administrateurs au niveau de l'application mobile MyBIAT Corporate a travers les moyens d'acces offerts : pass code, identification biometrique...etc vaut consentement sur les instructions et les operations effectuees via l'application mobile garantissant l'integralite de celles-ci jusqu'a leur traitement et, a ce titre, engage pleinement, dans la limite des pouvoirs consentis aux Utilisateurs, le Client.\nLa perte du telephone mobile ou la divulgation de l'identifiant ou du code confidentiel meme en cas d'absence de toute faute, engage la responsabilite du Client. Ce dernier est tenu d'informer la Banque de tout incident lie a l'utilisation de l'application mobile MyBIAT Corporate. Il est tenu, notamment, d'aviser immediatement la Banque en cas de perte ou de vol.\nLa declaration de perte ou de vol doit etre immediate et faite par ecrit (telex, fax ou telegramme) par le Client aupres de l'agence ou est ouvert son compte courant et ce, pendant les heures d'ouverture des guichets.\nLa Banque ne peut, en aucune facon, etre consideree responsable de la perte du telephone mobile ou de l'usage frauduleux qui peut en etre fait par quelque personne que ce soit et de toute utilisation malveillante et de facon plus generale, des consequences de la negligence ou de l'imprudence du Client."],
+      ["Article 7 - Responsabilites",
+       "La Banque assume, au titre de la Plateforme, une obligation de mise en oeuvre de moyens techniques de transmission d'informations qui s'analyse en une obligation de moyens. La Banque n'assume aucune responsabilite en ce qui concerne le transport des informations et est etrangere a tout litige susceptible de survenir entre le Client et les operateurs de communication.\nLa Banque n'est responsable de l'execution defectueuse d'une de ses obligations qu'autant que celle-ci est due a sa faute grave, dont la preuve incombe au Client qui demande reparation.\nLa Banque ne pourra pas etre tenue responsable d'une quelconque perte ou d'un quelconque dommage decoulent des actes commis par des tiers ou en relation avec des services qui ne sont pas directement ni exclusivement fournis par la Banque elle-meme dans le cadre de la Plateforme.\nElle n'est pas responsable non plus, lorsque l'inexecution de ses obligations resulte d'un cas de force majeure ou en cas d'interruption de la Plateforme, liee au transport des informations ou au Systeme Informatique du Client. De meme, la Banque n'est pas responsable d'une consequence d'un defaut de securite du terminal de connexion utilise par le Client, lequel demeure pleinement responsable des consequences resultant d'une erreur de transmission ou de manipulation de sa part, d'une mauvaise utilisation de son Systeme Informatique ou d'une mauvaise utilisation de la Plateforme.\nLa Banque ne pourra etre tenue pour responsable de la transmission ou de la qualite des donnees, de la qualite et de la disponibilite des reseaux de transmission de donnees ou des interruptions de services, blocages ou graves interruptions des moyens de transmission et des moyens de telecommunication, y compris le SWIFT. En outre, la Banque ne pourra etre tenue pour responsable des dommages directs ou indirects susceptibles de decoulerou de resulter de la connexion ou de l'absence de connexion au Site utilise pour la Plateforme par le Client.\nEn tout etat de cause, la responsabilite de la Banque sera limitee aux montants verses par le Client a la Banque au titre de l'execution de la Fonctionnalite qui fait l'objet du litige.\nLe Client s'engage a indemniser entierement la Banque de (i) toute action en justice, procedure, reclamation engagee a son encontre, (ii) de tous prejudices, pertes et de (iii) tous frais et depenses, resultant directement ou indirectement de l'utilisation frauduleuse de la Plateforme, des Fonctionnalites ou d'un manquement a l'une quelconque des stipulations de la presente Convention."],
+      ["Article 8 - Facturation et reglement",
+       "La facturation des services de la Plateforme s'applique selon un mode forfaitaire communique au Client en fonction des Fonctionnalites souscrites par ce dernier.\nLa Banque peut reviser, a tout moment, les conditions tarifaires en informant le Client 10 jours au moins avant l'entree en vigueur des nouvelles conditions tarifaires.\nLa nouvelle tarification entrera en vigueur a l'expiration du delai precite sauf resiliation de la presente Convention par le Client pendant ce delai."],
+      ["Article 9 - Duree / Resiliation",
+       "L'abonnement est souscrit pour une duree d'une annee renouvelable par tacite reconduction, a defaut d'un conge notifie par le client par tout moyen laissant une trace ecrite.\nDe meme, la Banque se reserve le droit de resilier la presente convention en respectant un preavis de 15 jours notifie au Client par tout moyen laissant une trace ecrite.\nA compter de la date de resiliation, les parties doivent cesser toute activite liee a la convention.\nLa resiliation de la convention n'affecte pas les droits et obligations decoulant de la periode anterieure a la resiliation notamment les responsabilites financieres."],
+      ["Article 10 - Droit applicable et attribution de competence",
+       "La presente Convention est soumise au droit Tunisien.\nLes tribunaux de Tunis seront seuls competents pour connaitre de tout differend portant sur la validite, l'interpretation ou l'execution de la presente Convention."],
+      ["Article 11 - Reclamation",
+       "Pour vos reclamations nous vous prions de contacter : le Centre de Relations Clients BIAT : Mezzanine Bloc B, Immeuble Carthage Center sis a Avenue de Carthage, Tunis, tel : 31 31 18 18 - relationsclients@biat.com.tn / www.biat.com.tn / ou votre agence. A defaut d'une reponse de notre part dans un delai de 15 jours ouvrables, ou en cas de contestation de la reponse apportee, vous pouvez saisir par ecrit le mediateur bancaire M. Sadok HATTAY : 97 401 068 / 71 292 297 - sadok.hattay@cbf.org.tn - 10, Lotissement HACHI CHA - Hammam-Lif - 2050 Ben Arous."]
+    ];
+
+    articles.forEach(([titre,corps])=>{
+      r=checkPage(pg,y,50);pg=r.pg;y=r.y;
+      pg.drawText(titre,{x:ML,y,size:SB,font:fontB,color:BLUE}); y-=SLH+2;
+      const paragraphes=corps.split("\n");
+      paragraphes.forEach(para=>{
+        r=checkPage(pg,y,30);pg=r.pg;y=r.y;
+        y=drawPara(pg,para,ML+4,y,TW-4,SB,fontR,SLH); y-=3;
+      });
+      y-=5;
+    });
+
+    r=checkPage(pg,y,80);pg=r.pg;y=r.y;
+    hline(pg,y); y-=14;
+    pg.drawText("Fait en deux (2) exemplaires originaux, le "+today+" A "+ville,{x:ML,y,size:S,font:fontR,color:BLACK}); y-=20;
+    pg.drawText("La Banque                                                      Le Client",{x:ML,y,size:S,font:fontB,color:BLACK}); y-=14;
+    pg.drawText("La BIAT representee par M.                                La Societe representee par M.",{x:ML,y,size:S,font:fontR,color:BLACK}); y-=10;
+    sigBlock(pg,y,dir,socRep);
+
+    // =============================================
+    // ANNEXE 1 : OFFRE / FONCTIONNALITES
+    // =============================================
+    pg=addPage(); y=H-50;
+    pg.drawText("Annexe 1 - Offre / Fonctionnalites",{x:ML,y,size:13,font:fontB,color:BLUE}); y-=22;
+    const typeLabel=convType==="creation"?"[X] Creation   [ ] Modification":"[ ] Creation   [X] Modification";
+    pg.drawText("Type : "+typeLabel,{x:ML,y,size:10,font:fontR,color:BLACK}); y-=18;
+
+    y=sectionBar(pg,"Donnees Abonnement",y);
+    pg.drawText("Date creation : ..../...../..............",{x:ML+4,y,size:9.5,font:fontR,color:BLACK}); y-=13;
+    pg.drawText("N° Compte de facturation : "+socCpte,{x:ML+4,y,size:9.5,font:fontR,color:BLACK}); y-=18;
+
+    // Tableau modules
+    const mHdrs=["Modules fonctionnels","Classique","Premium"];
+    const mCols=[240,90,90];
+    const mRows=[
+      ["Cash Management",modCash&&cashTier==="classique",modCash&&cashTier==="premium"],
+      ["Operations de masse",false,modMasse],
+      ["Administration societe",modAdmin&&adminTier==="classique",modAdmin&&adminTier==="premium"]
+    ];
+    const mRH=22;
+    pg.drawRectangle({x:ML,y:y-mRH,width:mCols.reduce((a,b)=>a+b,0),height:mRH,color:BLUE});
+    mHdrs.forEach((h,i)=>{
+      const cx=ML+mCols.slice(0,i).reduce((a,b)=>a+b,0);
+      pg.drawText(h,{x:cx+5,y:y-mRH+7,size:9,font:fontB,color:WHITE});
+    });
+    y-=mRH;
+    mRows.forEach((row,ri)=>{
+      const bg=ri%2===0?LGRAY:WHITE;
+      pg.drawRectangle({x:ML,y:y-mRH,width:mCols.reduce((a,b)=>a+b,0),height:mRH,color:bg,borderColor:rgb(0.8,0.8,0.8),borderWidth:0.4});
+      pg.drawText(row[0],{x:ML+5,y:y-mRH+7,size:9,font:fontR,color:BLACK});
+      [row[1],row[2]].forEach((chk,ci)=>{
+        const cx=ML+mCols[0]+mCols.slice(1,ci+1).reduce((a,b)=>a+b,0)+mCols[ci+1]/2-5;
+        pg.drawText(chk?"X":" ",{x:cx,y:y-mRH+7,size:10,font:fontB,color:chk?BLUE:GRAY});
+      });
+      y-=mRH;
+    });
+    y-=20;
+    hline(pg,y); y-=14;
+    pg.drawText("Fait en deux (2) exemplaires originaux, le "+today+" A "+ville,{x:ML,y,size:9,font:fontR,color:BLACK}); y-=26;
+    sigBlock(pg,y,dir,socRep);
+
+    // =============================================
+    // ANNEXE 2 : UTILISATEURS / ROLES
+    // =============================================
+    pg=addPage(); y=H-50;
+    pg.drawText("Annexe 2 - Utilisateurs / Roles",{x:ML,y,size:13,font:fontB,color:BLUE}); y-=22;
+    const typeLabel2=convType==="creation"?"[X] Creation   [ ] Modification":"[ ] Creation   [X] Modification";
+    pg.drawText("Type : "+typeLabel2,{x:ML,y,size:10,font:fontR,color:BLACK}); y-=18;
+
+    // Tableau recap utilisateurs
+    const uCols=[38,90,90,170,72];
+    const uHdrs=["","Nom","Prenom","Email","Numero GSM"];
+    const uRH=18;
+    pg.drawRectangle({x:ML,y:y-uRH,width:uCols.reduce((a,b)=>a+b,0),height:uRH,color:BLUE});
+    uHdrs.forEach((h,i)=>{
+      const cx=ML+uCols.slice(0,i).reduce((a,b)=>a+b,0);
+      pg.drawText(h,{x:cx+3,y:y-uRH+5,size:7.5,font:fontB,color:WHITE});
+    });
+    y-=uRH;
+    users.forEach((u,i)=>{
+      const bg=i%2===0?LGRAY:WHITE;
+      pg.drawRectangle({x:ML,y:y-uRH,width:uCols.reduce((a,b)=>a+b,0),height:uRH,color:bg,borderColor:rgb(0.8,0.8,0.8),borderWidth:0.4});
+      ["User "+(i+1),u.nom,u.prenom,u.email,u.gsm].forEach((v,ci)=>{
+        const cx=ML+uCols.slice(0,ci).reduce((a,b)=>a+b,0);
+        const tv=(v||"").length>22&&ci===3?(v||"").substring(0,22)+"...":(v||"");
+        pg.drawText(tv,{x:cx+3,y:y-uRH+5,size:ci===0?7.5:7,font:ci===0?fontB:fontR,color:BLACK});
+      });
+      y-=uRH;
+    });
+    y-=16;
+
+    // Habilitations par utilisateur
+    for(let ui=0;ui<users.length;ui++){
+      const u=users[ui];
+      r=checkPage(pg,y,120);pg=r.pg;y=r.y;
+      y=sectionBar(pg,"Habilitations - User "+(ui+1)+" : "+u.nom+" "+u.prenom,y);
+
+      // colonnes: feat(165) + 4 roles(44 each) + 2 groupes(56 each) = 165+176+112=453
+      const hCols=[165,44,44,44,44,56,56];
+      const hHdrs=["Fonctionnalites",...roles,...groupes];
+      const hTW=hCols.reduce((a,b)=>a+b,0);
+      const hRH=16;
+
+      pg.drawRectangle({x:ML,y:y-hRH,width:hTW,height:hRH,color:BLUE});
+      hHdrs.forEach((h,i)=>{
+        const cx=ML+hCols.slice(0,i).reduce((a,b)=>a+b,0);
+        pg.drawText(h,{x:cx+2,y:y-hRH+4,size:6.5,font:fontB,color:WHITE});
+      });
+      y-=hRH;
+
+      let catPrev="";
+      u.habs.forEach((row,ri)=>{
+        if(row.cat!==catPrev){
+          r=checkPage(pg,y,40);pg=r.pg;y=r.y;
+          pg.drawRectangle({x:ML,y:y-14,width:hTW,height:14,color:LBLUE});
+          pg.drawText(row.cat,{x:ML+3,y:y-10,size:7.5,font:fontB,color:BLUE});
+          y-=14; catPrev=row.cat;
+        }
+        r=checkPage(pg,y,20);pg=r.pg;y=r.y;
+        const bg=ri%2===0?rgb(0.98,0.98,0.98):WHITE;
+        pg.drawRectangle({x:ML,y:y-hRH,width:hTW,height:hRH,color:bg,borderColor:rgb(0.85,0.85,0.85),borderWidth:0.3});
+        const ft=(row.feat||"").length>26?(row.feat||"").substring(0,26)+"...":(row.feat||"");
+        pg.drawText(ft,{x:ML+3,y:y-hRH+4,size:7,font:fontR,color:BLACK});
+        roles.forEach((role,i)=>{
+          const cx=ML+hCols[0]+hCols.slice(1,i+1).reduce((a,b)=>a+b,0)+hCols[i+1]/2-4;
+          const chk=row.roles[role];
+          pg.drawText(chk?"X":"",{x:cx,y:y-hRH+4,size:8,font:fontB,color:BLUE});
+        });
+        groupes.forEach((g,i)=>{
+          const cx=ML+hCols[0]+hCols.slice(1,roles.length+1).reduce((a,b)=>a+b,0)+hCols.slice(roles.length+1,roles.length+i+1).reduce((a,b)=>a+b,0)+hCols[roles.length+i+1]/2-4;
+          const chk=row.groupes[g];
+          pg.drawText(chk?"X":"",{x:cx,y:y-hRH+4,size:8,font:fontB,color:BLUE});
+        });
+        y-=hRH;
+      });
+
+      y-=6;
+      pg.drawText("(*) : l'administration de la societe sera accordee suivant l'offre choisie au niveau de l'annexe 1.",{x:ML,y,size:7,font:fontR,color:GRAY}); y-=10;
+      pg.drawText("(**) : la validation des ordres de virements requiert l'approbation d'une seule personne nommee valideur. Par ailleurs et dans le cadre d'une offre Premium, il est a noter que la modification des regles de",{x:ML,y,size:7,font:fontR,color:GRAY}); y-=9;
+      pg.drawText("validation peut etre faite par un Administrateur Societe ou un Administrateur Banque.",{x:ML,y,size:7,font:fontR,color:GRAY}); y-=9;
+      pg.drawText("(***) : les donnees relatives aux operations de commerce exterieur affichees sur MyBIAT Corporate sont a titre indicatif et ne peuvent pas etre utilisees aupres des instances concernees.",{x:ML,y,size:7,font:fontR,color:GRAY}); y-=14;
+
+      pg.drawText("Lu et approuve",{x:W-MR-100,y,size:8,font:fontB,color:BLACK}); y-=10;
+      pg.drawText("Signature du client",{x:W-MR-100,y,size:8,font:fontR,color:BLACK}); y-=6;
+      hline(pg,y); y-=12;
+      pg.drawText("Fait en deux (2) exemplaires originaux, le "+today+" A "+ville,{x:ML,y,size:8.5,font:fontR,color:BLACK}); y-=24;
+      sigBlock(pg,y,dir,socRep); y-=72;
+    }
+
+    // Sauvegarde
+    const pdfBytes=await pdfDoc.save();
+    const blob=new Blob([pdfBytes],{type:"application/pdf"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    const nomFich=(getVal("soc_nom")||"client").replace(/\s+/g,"_");
+    a.download="Convention_MyBIAT_"+nomFich+".pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+
+  }catch(err){
+    alert("Erreur lors de la generation : "+err.message);
+    console.error(err);
+  }finally{
+    btn.disabled=false;
+    btn.textContent="Generer et telecharger le contrat PDF";
+  }
+}
+
+buildUserTabs();
+</script>
+</body>
+</html>
